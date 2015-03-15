@@ -3,7 +3,8 @@
  * This is a MFRC522 library example; see https://github.com/miguelbalboa/rfid
  * for further details and other examples.
  * 
- * NOTE: The library file MFRC522.h has a lot of useful info. Please read it.
+ * NOTE: The library file MFRC522.h has a lot of useful info. The functions are
+ * documented in MFRC522.cpp. Please read it.
  * 
  * Released into the public domain.
  * ----------------------------------------------------------------------------
@@ -41,10 +42,10 @@
 #include <SPI.h>
 #include <MFRC522.h>
 
-#define RST_PIN		9		// 
-#define SS_PIN		10		//
+#define RST_PIN         9          // Configurable, see typical pin layout above
+#define SS_PIN          10         // Configurable, see typical pin layout above
 
-MFRC522 mfrc522(SS_PIN, RST_PIN);	// Create MFRC522 instance
+MFRC522 mfrc522(SS_PIN, RST_PIN);  // Create MFRC522 instance.
 
 void setup() {
 	Serial.begin(9600);		// Initialize serial communications with the PC
