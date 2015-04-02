@@ -44,7 +44,7 @@ void setup() {
   Serial.begin(9600);  // Initialize serial communications with the PC
   while (!Serial);     // Do nothing if no serial port is opened (added for Arduinos based on ATMEGA32U4)
   SPI.begin();         // Init SPI bus
-  mfrc522.PCD_Init();  // Init MFRC522 card
+  mfrc522.PCD_Init();  // Init MFRC522 module
   
   // Prepare the key (used both as key A and as key B)
   // using FFFFFFFFFFFFh which is the default at chip delivery from the factory
@@ -65,12 +65,10 @@ void setup() {
  */
 void loop() {
   // Look for new cards
-  if ( ! mfrc522.PICC_IsNewCardPresent())
-    return;
+  if (!mfrc522.PICC_IsNewCardPresent()) return;
   
   // Select one of the cards
-  if ( ! mfrc522.PICC_ReadCardSerial())
-    return;
+  if (!mfrc522.PICC_ReadCardSerial()) return;
   
   // Show some details of the PICC (that is: the tag/card)
   Serial.print(F("Card UID:"));

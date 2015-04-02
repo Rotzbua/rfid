@@ -37,7 +37,8 @@ void setup() {
   Serial.begin(9600);  // Initialize serial communications with the PC
   while (!Serial);     // Do nothing if no serial port is opened (added for Arduinos based on ATMEGA32U4)
   SPI.begin();         // Init SPI bus
-  mfrc522.PCD_Init();  // Init MFRC522 card
+  mfrc522.PCD_Init();  // Init MFRC522 module
+  
   Serial.println(F("Warning: this example clears your mifare UID, use with care!"));
   
   // Prepare key - all keys are set to FFFFFFFFFFFFh at chip delivery from the factory.
@@ -47,7 +48,7 @@ void setup() {
 }
 
 void loop() {
-  if ( mfrc522.MIFARE_UnbrickUidSector(false) ) {
+  if (mfrc522.MIFARE_UnbrickUidSector(false)) {
     Serial.println(F("Cleared sector 0, set UID to 1234. Card should be responsive again now."));
   }
   delay(1000);
