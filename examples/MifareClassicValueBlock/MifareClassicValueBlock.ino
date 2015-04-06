@@ -280,8 +280,8 @@ void formatValueBlock(byte blockAddr) {
   Serial.print(F("Reading block ")); Serial.println(blockAddr);
   status = mfrc522.MIFARE_Read(blockAddr, buffer, &size);
   if (status != MFRC522::STATUS_OK) {
-      Serial.print(F("MIFARE_Read() failed: "));
-      Serial.println(mfrc522.GetStatusCodeName(status));
+    Serial.print(F("MIFARE_Read() failed: "));
+    Serial.println(mfrc522.GetStatusCodeName(status));
     return;
   }
   

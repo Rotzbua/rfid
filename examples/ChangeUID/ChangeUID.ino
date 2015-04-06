@@ -62,7 +62,7 @@ void setup() {
 // But of course this is a more proper approach
 void loop() {
   // Look for new cards, and select one if present
-  if ( ! mfrc522.PICC_IsNewCardPresent() || ! mfrc522.PICC_ReadCardSerial() ) {
+  if (!mfrc522.PICC_IsNewCardPresent() || !mfrc522.PICC_ReadCardSerial()) {
     delay(50);
     return;
   }
@@ -74,7 +74,7 @@ void loop() {
   for (byte i = 0; i < mfrc522.uid.size; i++) {
     Serial.print(mfrc522.uid.uidByte[i] < 0x10 ? " 0" : " ");
     Serial.print(mfrc522.uid.uidByte[i], HEX);
-  } 
+  }
   Serial.println();
   
   // Dump PICC type
@@ -93,13 +93,13 @@ void loop() {
   
   // Set new UID
   byte newUid[] = NEW_UID;
-  if ( mfrc522.MIFARE_SetUid(newUid, (byte)4, true) ) {
+  if (mfrc522.MIFARE_SetUid(newUid, (byte) 4, true)) {
     Serial.println(F("Wrote new UID to card."));
   }
   
   // Halt PICC and re-select it so DumpToSerial doesn't get confused
   mfrc522.PICC_HaltA();
-  if ( ! mfrc522.PICC_IsNewCardPresent() || ! mfrc522.PICC_ReadCardSerial() ) {
+  if (!mfrc522.PICC_IsNewCardPresent() || !mfrc522.PICC_ReadCardSerial()) {
     return;
   }
   
