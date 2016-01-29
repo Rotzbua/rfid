@@ -70,9 +70,9 @@ void loop() {
   Serial.println(rfid.PICC_GetTypeName(piccType));
 
   // Check is the PICC of Classic MIFARE type
-  if (piccType != MFRC522::PICC_TYPE_MIFARE_MINI &&  
-    piccType != MFRC522::PICC_TYPE_MIFARE_1K &&
-    piccType != MFRC522::PICC_TYPE_MIFARE_4K) {
+  if (piccType != MFRC522::PICC_Type::MIFARE_MINI &&  
+    piccType != MFRC522::PICC_Type::MIFARE_1K &&
+    piccType != MFRC522::PICC_Type::MIFARE_4K) {
     Serial.println(F("Your tag is not of type MIFARE Classic."));
     return;
   }
