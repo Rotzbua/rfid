@@ -273,7 +273,7 @@ public:
 	
 	// PICC types we can detect. Remember to update PICC_GetTypeName() if you add more.
 	// last value set to 255, hints compiler to use byte instead of default integer, works for arduino ide to save ram and flash
-	enum class PICC_Type {
+	enum class PICC_Type : byte {
 		UNKNOWN			,
 		ISO_14443_4		,	// PICC compliant with ISO/IEC 14443-4 
 		ISO_18092		,	// PICC compliant with ISO/IEC 18092 (NFC)
@@ -288,7 +288,7 @@ public:
 	
 	// Return codes from the functions in this class. Remember to update GetStatusCodeName() if you add more.
 	// last value set to 255, hints compiler to use byte instead of default integer, works for arduino ide to save ram and flash
-	enum class StatusCode {
+	enum class StatusCode : byte {
 		OK				,	// Success
 		ERROR			,	// Error in communication
 		COLLISION		,	// Collission detected
