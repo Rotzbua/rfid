@@ -273,31 +273,31 @@ public:
 	
 	// PICC types we can detect. Remember to update PICC_GetTypeName() if you add more.
 	// last value set to 255, hints compiler to use byte instead of default integer, works for arduino ide to save ram and flash
-	enum PICC_Type {
-		PICC_TYPE_UNKNOWN		,
-		PICC_TYPE_ISO_14443_4	,	// PICC compliant with ISO/IEC 14443-4 
-		PICC_TYPE_ISO_18092		, 	// PICC compliant with ISO/IEC 18092 (NFC)
-		PICC_TYPE_MIFARE_MINI	,	// MIFARE Classic protocol, 320 bytes
-		PICC_TYPE_MIFARE_1K		,	// MIFARE Classic protocol, 1KB
-		PICC_TYPE_MIFARE_4K		,	// MIFARE Classic protocol, 4KB
-		PICC_TYPE_MIFARE_UL		,	// MIFARE Ultralight or Ultralight C
-		PICC_TYPE_MIFARE_PLUS	,	// MIFARE Plus
-		PICC_TYPE_TNP3XXX		,	// Only mentioned in NXP AN 10833 MIFARE Type Identification Procedure
-		PICC_TYPE_NOT_COMPLETE	= 255	// SAK indicates UID is not complete.
+	enum class PICC_Type {
+		UNKNOWN			,
+		ISO_14443_4		,	// PICC compliant with ISO/IEC 14443-4 
+		ISO_18092		,	// PICC compliant with ISO/IEC 18092 (NFC)
+		MIFARE_MINI		,	// MIFARE Classic protocol, 320 bytes
+		MIFARE_1K		,	// MIFARE Classic protocol, 1KB
+		MIFARE_4K		,	// MIFARE Classic protocol, 4KB
+		MIFARE_UL		,	// MIFARE Ultralight or Ultralight C
+		MIFARE_PLUS		,	// MIFARE Plus
+		TNP3XXX			,	// Only mentioned in NXP AN 10833 MIFARE Type Identification Procedure
+		NOT_COMPLETE	= 255	// SAK indicates UID is not complete.
 	};
 	
 	// Return codes from the functions in this class. Remember to update GetStatusCodeName() if you add more.
 	// last value set to 255, hints compiler to use byte instead of default integer, works for arduino ide to save ram and flash
-	enum StatusCode {
-		STATUS_OK				,	// Success
-		STATUS_ERROR			,	// Error in communication
-		STATUS_COLLISION		,	// Collission detected
-		STATUS_TIMEOUT			,	// Timeout in communication.
-		STATUS_NO_ROOM			,	// A buffer is not big enough.
-		STATUS_INTERNAL_ERROR	,	// Internal error in the code. Should not happen ;-)
-		STATUS_INVALID			,	// Invalid argument.
-		STATUS_CRC_WRONG		,	// The CRC_A does not match
-		STATUS_MIFARE_NACK		= 255	// A MIFARE PICC responded with NAK.
+	enum class StatusCode {
+		OK				,	// Success
+		ERROR			,	// Error in communication
+		COLLISION		,	// Collission detected
+		TIMEOUT			,	// Timeout in communication.
+		NO_ROOM			,	// A buffer is not big enough.
+		INTERNAL_ERROR	,	// Internal error in the code. Should not happen ;-)
+		INVALID			,	// Invalid argument.
+		CRC_WRONG		,	// The CRC_A does not match
+		MIFARE_NACK		= 255	// A MIFARE PICC responded with NAK.
 	};
 	
 	// A struct used for passing the UID of a PICC.
