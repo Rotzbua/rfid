@@ -84,7 +84,7 @@ boolean try_key(MFRC522::MIFARE_Key *key)
     
     // Serial.println(F("Authenticating using key A..."));
     status = mfrc522.PCD_Authenticate(MFRC522::PICC_CMD_MF_AUTH_KEY_A, block, key, &(mfrc522.uid));
-    if (status != MFRC522::STATUS_OK) {
+    if (status != MFRC522::StatusCode::OK) {
         // Serial.print(F("PCD_Authenticate() failed: "));
         // Serial.println(mfrc522.GetStatusCodeName(status));
         return false;
@@ -93,7 +93,7 @@ boolean try_key(MFRC522::MIFARE_Key *key)
     // Read block
     byte byteCount = sizeof(buffer);
     status = mfrc522.MIFARE_Read(block, buffer, &byteCount);
-    if (status != MFRC522::STATUS_OK) {
+    if (status != MFRC522::StatusCode::OK) {
         // Serial.print(F("MIFARE_Read() failed: "));
         // Serial.println(mfrc522.GetStatusCodeName(status));
     }
