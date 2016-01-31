@@ -40,7 +40,7 @@ void loop() {
   byte pACK[] = {0, 0}; //16 bit PassWord ACK returned by the NFCtag
 
   Serial.print("Auth: ");
-  Serial.println(MFRC522.GetStatusCodeName(mfrc522.PCD_NTAG216_AUTH(&PSWBuff[0], pACK))); //Request Authentification if return STATUS_OK we are good
+  Serial.println(mfrc522.GetStatusCodeName(mfrc522.PCD_NTAG216_AUTH(&PSWBuff[0], pACK))); //Request Authentification if return STATUS_OK we are good
 
   //Print PassWordACK
   Serial.print(pACK[0], HEX);
