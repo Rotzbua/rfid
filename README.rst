@@ -53,6 +53,14 @@ This library works with Arduino IDE 1.6, older versions are **not supported** an
 If you use your own compiler, you have to enable ``c++11``-support.
 
 
+.. _compatible ide:
+Compatible IDE
+----------
+This library works with Arduino IDE 1.6, older versions are not supported and will cause compile errors. The built-in library manager is supported.
+
+If you use your own compiler, you have to enable ``c++11``-support.
+
+
 .. _compatible boards:
 Compatible boards
 ----------
