@@ -964,7 +964,7 @@ MFRC522::StatusCode MFRC522::MIFARE_Ultralight_Write(	byte page, 		///< The page
  * @return STATUS_OK on success, STATUS_??? otherwise.
  */
 MFRC522::StatusCode MFRC522::MIFARE_Decrement(	byte blockAddr, ///< The block (0-0xff) number.
-												long delta		///< This number is subtracted from the value of block blockAddr.
+												int32_t delta		///< This number is subtracted from the value of block blockAddr.
 											) {
 	return MIFARE_TwoStepHelper(PICC_CMD_MF_DECREMENT, blockAddr, delta);
 } // End MIFARE_Decrement()
@@ -978,7 +978,7 @@ MFRC522::StatusCode MFRC522::MIFARE_Decrement(	byte blockAddr, ///< The block (0
  * @return STATUS_OK on success, STATUS_??? otherwise.
  */
 MFRC522::StatusCode MFRC522::MIFARE_Increment(	byte blockAddr, ///< The block (0-0xff) number.
-												long delta		///< This number is added to the value of block blockAddr.
+												int32_t delta		///< This number is added to the value of block blockAddr.
 											) {
 	return MIFARE_TwoStepHelper(PICC_CMD_MF_INCREMENT, blockAddr, delta);
 } // End MIFARE_Increment()
@@ -1005,7 +1005,7 @@ MFRC522::StatusCode MFRC522::MIFARE_Restore(	byte blockAddr ///< The block (0-0x
  */
 MFRC522::StatusCode MFRC522::MIFARE_TwoStepHelper(	byte command,	///< The command to use
 													byte blockAddr,	///< The block (0-0xff) number.
-													long data		///< The data to transfer in step 2
+													int32_t data		///< The data to transfer in step 2
 													) {
 	MFRC522::StatusCode result;
 	byte cmdBuffer[2]; // We only need room for 2 bytes.
@@ -1060,7 +1060,7 @@ MFRC522::StatusCode MFRC522::MIFARE_Transfer(	byte blockAddr ///< The block (0-0
  * @param[out]  value       Current value of the Value Block.
  * @return STATUS_OK on success, STATUS_??? otherwise.
   */
-MFRC522::StatusCode MFRC522::MIFARE_GetValue(byte blockAddr, long *value) {
+MFRC522::StatusCode MFRC522::MIFARE_GetValue(byte blockAddr, int32_t *value) {
 	MFRC522::StatusCode status;
 	byte buffer[18];
 	byte size = sizeof(buffer);
@@ -1069,7 +1069,7 @@ MFRC522::StatusCode MFRC522::MIFARE_GetValue(byte blockAddr, long *value) {
 	status = MIFARE_Read(blockAddr, buffer, &size);
 	if (status == STATUS_OK) {
 		// Extract the value
-		*value = (long(buffer[3])<<24) | (long(buffer[2])<<16) | (long(buffer[1])<<8) | long(buffer[0]);
+		*value = (int32_t(buffer[3])<<24) | (int32_t(buffer[2])<<16) | (int32_t(buffer[1])<<8) | int32_t(buffer[0]);
 	}
 	return status;
 } // End MIFARE_GetValue()
@@ -1085,10 +1085,10 @@ MFRC522::StatusCode MFRC522::MIFARE_GetValue(byte blockAddr, long *value) {
  * @param[in]   value       New value of the Value Block.
  * @return STATUS_OK on success, STATUS_??? otherwise.
  */
-MFRC522::StatusCode MFRC522::MIFARE_SetValue(byte blockAddr, long value) {
+MFRC522::StatusCode MFRC522::MIFARE_SetValue(byte blockAddr, int32_t value) {
 	byte buffer[18];
 	
-	// Translate the long into 4 bytes; repeated 2x in value block
+	// Translate the int32_t into 4 bytes; repeated 2x in value block
 	buffer[0] = buffer[ 8] = (value & 0xFF);
 	buffer[1] = buffer[ 9] = (value & 0xFF00) >> 8;
 	buffer[2] = buffer[10] = (value & 0xFF0000) >> 16;
@@ -1545,7 +1545,7 @@ void MFRC522::PICC_DumpMifareClassicSectorToSerial(Uid *uid,			///< Pointer to U
 		}
 		
 		if (group != 3 && (g[group] == 1 || g[group] == 6)) { // Not a sector trailer, a value block
-			long value = (long(buffer[3])<<24) | (long(buffer[2])<<16) | (long(buffer[1])<<8) | long(buffer[0]);
+			int32_t value = (int32_t(buffer[3])<<24) | (int32_t(buffer[2])<<16) | (int32_t(buffer[1])<<8) | int32_t(buffer[0]);
 			Serial.print(F(" Value=0x")); Serial.print(value, HEX);
 			Serial.print(F(" Adr=0x")); Serial.print(buffer[12], HEX);
 		}
