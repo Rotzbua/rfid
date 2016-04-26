@@ -269,8 +269,8 @@ void MFRC522::PCD_AntennaOff() {
  * 
  * @return Value of the RxGain, scrubbed to the 3 bits used.
  */
-byte MFRC522::PCD_GetAntennaGain() {
-	return PCD_ReadRegister(RFCfgReg) & (0x07<<4);
+MFRC522::PCD_RxGain MFRC522::PCD_GetAntennaGain() {
+	return (MFRC522::PCD_RxGain)(PCD_ReadRegister(RFCfgReg) & (0x07<<4));
 } // End PCD_GetAntennaGain()
 
 /**
@@ -278,7 +278,7 @@ byte MFRC522::PCD_GetAntennaGain() {
  * See 9.3.3.6 / table 98 in http://www.nxp.com/documents/data_sheet/MFRC522.pdf
  * NOTE: Given mask is scrubbed with (0x07<<4)=01110000b as RCFfgReg may use reserved bits.
  */
-void MFRC522::PCD_SetAntennaGain(byte mask) {
+void MFRC522::PCD_SetAntennaGain(PCD_RxGain mask) {
 	if (PCD_GetAntennaGain() != mask) {						// only bother if there is a change
 		PCD_ClearRegisterBitMask(RFCfgReg, (0x07<<4));		// clear needed to allow 000 pattern
 		PCD_SetRegisterBitMask(RFCfgReg, mask & (0x07<<4));	// only set RxGain[2:0] bits

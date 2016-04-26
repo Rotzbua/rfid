@@ -344,8 +344,8 @@ public:
 	void PCD_Reset();
 	void PCD_AntennaOn();
 	void PCD_AntennaOff();
-	byte PCD_GetAntennaGain();
-	void PCD_SetAntennaGain(byte mask);
+	PCD_RxGain PCD_GetAntennaGain();
+	void PCD_SetAntennaGain(PCD_RxGain mask);
 	bool PCD_PerformSelfTest();
 	
 	/////////////////////////////////////////////////////////////////////////////////////
