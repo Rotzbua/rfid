@@ -159,8 +159,9 @@ MFRC522::StatusCode MFRC522::PCD_CalculateCRC(	byte *data,		///< In: Pointer to 
 	PCD_WriteRegister(FIFODataReg, length, data);	// Write data to the FIFO
 	PCD_WriteRegister(CommandReg, PCD_CalcCRC);		// Start the calculation
 	
-	// Wait for the CRC calculation to complete. Each iteration of the while-loop takes 17.73�s.
-	word i = 5000;
+	// Wait for the CRC calculation to complete. Each iteration of the while-loop takes 17.73μs.
+	// TODO check/modify for other architectures than Arduino Uno 16bit
+	uint16_t i = 5000;
 	byte n;
 	while (1) {
 		n = PCD_ReadRegister(DivIrqReg);	// DivIrqReg[7..0] bits are: Set2 reserved reserved MfinActIRq reserved CRCIRq reserved reserved
@@ -197,7 +198,7 @@ void MFRC522::PCD_Init() {
 	
 	if (digitalRead(_resetPowerDownPin) == LOW) {	//The MFRC522 chip is in power down mode.
 		digitalWrite(_resetPowerDownPin, HIGH);		// Exit power down mode. This triggers a hard reset.
-		// Section 8.8.2 in the datasheet says the oscillator start-up time is the start up time of the crystal + 37,74�s. Let us be generous: 50ms.
+		// Section 8.8.2 in the datasheet says the oscillator start-up time is the start up time of the crystal + 37,74μs. Let us be generous: 50ms.
 		delay(50);
 	}
 	else { // Perform a soft reset
@@ -208,7 +209,7 @@ void MFRC522::PCD_Init() {
 	// f_timer = 13.56 MHz / (2*TPreScaler+1) where TPreScaler = [TPrescaler_Hi:TPrescaler_Lo].
 	// TPrescaler_Hi are the four low bits in TModeReg. TPrescaler_Lo is TPrescalerReg.
 	PCD_WriteRegister(TModeReg, 0x80);			// TAuto=1; timer starts automatically at the end of the transmission in all communication modes at all speeds
-	PCD_WriteRegister(TPrescalerReg, 0xA9);		// TPreScaler = TModeReg[3..0]:TPrescalerReg, ie 0x0A9 = 169 => f_timer=40kHz, ie a timer period of 25�s.
+	PCD_WriteRegister(TPrescalerReg, 0xA9);		// TPreScaler = TModeReg[3..0]:TPrescalerReg, ie 0x0A9 = 169 => f_timer=40kHz, ie a timer period of 25μs.
 	PCD_WriteRegister(TReloadRegH, 0x03);		// Reload timer with 0x3E8 = 1000, ie 25ms before timeout.
 	PCD_WriteRegister(TReloadRegL, 0xE8);
 	
@@ -236,7 +237,7 @@ void MFRC522::PCD_Reset() {
 	PCD_WriteRegister(CommandReg, PCD_SoftReset);	// Issue the SoftReset command.
 	// The datasheet does not mention how long the SoftRest command takes to complete.
 	// But the MFRC522 might have been in soft power-down mode (triggered by bit 4 of CommandReg) 
-	// Section 8.8.2 in the datasheet says the oscillator start-up time is the start up time of the crystal + 37,74�s. Let us be generous: 50ms.
+	// Section 8.8.2 in the datasheet says the oscillator start-up time is the start up time of the crystal + 37,74μs. Let us be generous: 50ms.
 	delay(50);
 	// Wait for the PowerDown bit in CommandReg to be cleared
 	while (PCD_ReadRegister(CommandReg) & (1<<4)) {
@@ -312,9 +313,8 @@ bool MFRC522::PCD_PerformSelfTest() {
 	PCD_WriteRegister(CommandReg, PCD_CalcCRC);
 	
 	// 6. Wait for self-test to complete
-	word i;
 	byte n;
-	for (i = 0; i < 0xFF; i++) {
+	for (uint8_t i = 0; i < 0xFF; i++) {
 		n = PCD_ReadRegister(DivIrqReg);	// DivIrqReg[7..0] bits are: Set2 reserved reserved MfinActIRq reserved CRCIRq reserved reserved
 		if (n & 0x04) {						// CRCIRq bit set - calculation done
 			break;
@@ -353,7 +353,7 @@ bool MFRC522::PCD_PerformSelfTest() {
 	}
 	
 	// Verify that the results match up to our expectations
-	for (i = 0; i < 64; i++) {
+	for (uint8_t i = 0; i < 64; i++) {
 		if (result[i] != pgm_read_byte(&(reference[i]))) {
 			return false;
 		}
@@ -402,7 +402,7 @@ MFRC522::StatusCode MFRC522::PCD_CommunicateWithPICC(	byte command,		///< The co
 														bool checkCRC		///< In: True => The last two bytes of the response is assumed to be a CRC_A that must be validated.
 									 ) {
 	byte n, _validBits;
-	unsigned int i;
+	uint16_t i;
 	
 	// Prepare values for BitFramingReg
 	byte txLastBits = validBits ? *validBits : 0;
@@ -420,7 +420,8 @@ MFRC522::StatusCode MFRC522::PCD_CommunicateWithPICC(	byte command,		///< The co
 	
 	// Wait for the command to complete.
 	// In PCD_Init() we set the TAuto flag in TModeReg. This means the timer automatically starts when the PCD stops transmitting.
-	// Each iteration of the do-while-loop takes 17.86�s.
+	// Each iteration of the do-while-loop takes 17.86μs.
+	// TODO check/modify for other architectures than Arduino Uno 16bit
 	i = 2000;
 	while (1) {
 		n = PCD_ReadRegister(ComIrqReg);	// ComIrqReg[7..0] bits are: Set1 TxIRq RxIRq IdleIRq HiAlertIRq LoAlertIRq ErrIRq TimerIRq
@@ -1759,7 +1760,7 @@ bool MFRC522::MIFARE_SetUid(byte *newUid, byte uidSize, bool logErrors) {
 	
 	// Write new UID to the data we just read, and calculate BCC byte
 	byte bcc = 0;
-	for (int i = 0; i < uidSize; i++) {
+	for (uint8_t i = 0; i < uidSize; i++) {
 		block0_buffer[i] = newUid[i];
 		bcc ^= newUid[i];
 	}

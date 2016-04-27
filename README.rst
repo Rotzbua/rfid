@@ -70,6 +70,13 @@ This library is compatible to Teensy and ESP8266, but not all examples are avail
 Note that the main target/support of library is still Arduino.
 
 
+.. _code style:
+Code style
+----------
+
+Please use ``fixed integers``, see `stdint.h`_. Why? This library is compatible to different boards which use different architectures (16bit vs 32bit). So unfixed ``int`` has different sizes on different environments and may cause unpredictable behaviour.
+
+
 .. _pin layout:
 Pin Layout
 ----------
@@ -253,3 +260,4 @@ It has been extended with functionality to alter sector 0 on Chinese UID changea
 .. _nxp mfrc522: http://www.nxp.com/documents/data_sheet/MFRC522.pdf
 .. _broken: http://eprint.iacr.org/2008/166
 .. _supported by hardware: https://web.archive.org/web/20151210045625/http://www.nxp.com/documents/leaflet/939775017564.pdf
+.. _stdint.h: https://en.wikibooks.org/wiki/C_Programming/C_Reference/stdint.h
