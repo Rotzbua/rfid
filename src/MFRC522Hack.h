@@ -11,11 +11,11 @@ private:
 public:
 	MFRC522Hack(MFRC522 *const device) : _device(device) {};
 	
-	bool MIFARE_OpenUidBackdoor(const bool logErrors) const;
+	const bool MIFARE_OpenUidBackdoor(const bool logErrors) const;
 	
-	bool MIFARE_SetUid(const byte *newUid, const byte uidSize, const bool logErrors) const;
+	const bool MIFARE_SetUid(const byte *newUid, const byte uidSize, const bool logErrors) const;
 	
-	bool MIFARE_UnbrickUidSector(const bool logErrors) const;
+	const bool MIFARE_UnbrickUidSector(const bool logErrors) const;
 };
 
 
