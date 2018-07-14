@@ -7,13 +7,13 @@
 
 class MFRC522Hack {
 private:
-	MFRC522 *const _device;
+	MFRC522 &_device;
 public:
-	MFRC522Hack(MFRC522 *const device) : _device(device) {};
+	MFRC522Hack(MFRC522 &device) : _device(device) {};
 	
 	const bool MIFARE_OpenUidBackdoor(const bool logErrors) const;
 	
-	const bool MIFARE_SetUid(const byte *newUid, const byte uidSize, const bool logErrors) const;
+	const bool MIFARE_SetUid(const byte *const newUid, const byte uidSize, const bool logErrors) const;
 	
 	const bool MIFARE_UnbrickUidSector(const bool logErrors) const;
 };
