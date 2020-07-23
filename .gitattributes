@@ -5,3 +5,6 @@
 doc/*.doc export-ignore
 
 .travis.yml export-ignore
+
+*.h linguist-language=cpp
+*.ino linguist-language=cpp
