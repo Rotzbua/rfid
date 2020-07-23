@@ -6,5 +6,5 @@ doc/*.doc export-ignore
 
 .travis.yml export-ignore
 
-*.h linguist-language=cpp
-*.ino linguist-language=cpp
+*.h text diff=cpp linguist-language=cpp
+*.ino text diff=cpp linguist-language=cpp
