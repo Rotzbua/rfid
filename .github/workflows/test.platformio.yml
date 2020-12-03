@@ -24,7 +24,7 @@ jobs:
             Ntag216_AUTH,
             ReadNUID,
             RFID-Cloner,
-            rfid_read_personal_data,
+            rfid_read_personal_data
           ]
         include:
           - boards: '--board=uno --board=megaatmega1280'
