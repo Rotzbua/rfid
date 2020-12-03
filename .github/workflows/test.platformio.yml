@@ -12,19 +12,19 @@ jobs:
         boards: ['--board=uno --board=megaatmega1280 --board=due --board=zero --board=d1_mini']
         example: |
           [
-          ChangeUID,
-          DumpInfo,
-          firmware_check,
-          FixBrickedUID,
-          MifareClassicValueBlock,
-          MinimalInterrupt,
-          ReadUidMultiReader,
-          rfid_default_keys,
-          rfid_write_personal_data,
-          Ntag216_AUTH,
-          ReadNUID,
-          RFID-Cloner,
-          rfid_read_personal_data,
+            ChangeUID,
+            DumpInfo,
+            firmware_check,
+            FixBrickedUID,
+            MifareClassicValueBlock,
+            MinimalInterrupt,
+            ReadUidMultiReader,
+            rfid_default_keys,
+            rfid_write_personal_data,
+            Ntag216_AUTH,
+            ReadNUID,
+            RFID-Cloner,
+            rfid_read_personal_data,
           ]
         include:
           - boards: '--board=uno --board=megaatmega1280'
