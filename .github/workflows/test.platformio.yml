@@ -8,10 +8,9 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        example: [
-          examples/ChangeUID/ChangeUID.ino,
-          examples/DumpInfo/DumpInfo.ino
-        ]
+        platform: [all]
+        example: [ChangeUID]
+
 
     steps:
     - uses: actions/checkout@v2
@@ -33,6 +32,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install --upgrade platformio
     - name: Run PlatformIO
-      run: platformio ci --lib=. --board=uno --board=megaatmega1280
+      # test all
+      run: platformio ci --lib=. --board=uno --board=megaatmega1280 --board=due --board=zero --board=d1_mini
       env:
-        PLATFORMIO_CI_SRC: ${{ matrix.example }}
+        PLATFORMIO_CI_SRC: examples/${{ matrix.example }}/${{ matrix.example }}.ino
