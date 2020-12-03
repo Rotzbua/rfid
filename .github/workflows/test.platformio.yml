@@ -55,7 +55,7 @@ jobs:
       env:
         PLATFORMIO_CI_SRC: examples/${{ matrix.example }}/${{ matrix.example }}.ino
     - name: Run PlatformIO avr Boards
-      if: contains(matrix.board, 'avr_only')
+      if: ${{ contains(matrix.board, 'avr_only') }}
       # test all
       run: platformio ci --lib=. --board=uno --board=megaatmega1280
       env:
