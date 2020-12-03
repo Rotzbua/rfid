@@ -10,8 +10,7 @@ jobs:
       fail-fast: false
       matrix:
         boards: ['--board=uno --board=megaatmega1280 --board=due --board=zero --board=d1_mini']
-        example: |
-          [
+        example: [
             ChangeUID,
             DumpInfo,
             firmware_check,
