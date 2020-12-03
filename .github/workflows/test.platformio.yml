@@ -51,6 +51,6 @@ jobs:
         pip install --upgrade platformio
     - name: Run PlatformIO
       # test all
-      run: platformio ci --lib=. 
+      run: platformio ci --lib=. ${{ matrix.boards }}
       env:
         PLATFORMIO_CI_SRC: examples/${{ matrix.example }}/${{ matrix.example }}.ino
